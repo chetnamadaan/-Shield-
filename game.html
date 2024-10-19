@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Self Defense Game</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        canvas {
+            width: 1000px;
+            border: 4px solid #fff;
+            border-radius: 15px;
+            background-color: #fff;
+        }
+        #sosButton, #sprayButton {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-120%);
+            padding: 15px 25px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin: 5px;
+        }
+        #sprayButton {
+            transform: translateX(-20%);
+            margin-left: 60px;
+        }
+        #sosButton:hover, #sprayButton:hover {
+            background-color: darkred;
+        }
+        #pauseButton, #resetButton {
+            position: absolute;
+            padding: 10px 20px;
+            background-color: blue;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        #pauseButton {
+            top: 30px;
+            left: 30px;
+        }
+        #resetButton {
+            top: 30px;
+            right: 30px;
+        }
+        #pauseButton:hover, #resetButton:hover {
+            background-color: darkblue;
+        }
+        .health-bar {
+            position: absolute;
+            height: 10px;
+            border-radius: 5px;
+        }
+       
+        .game-message {
+            position: absolute;
+            font-size: 24px;
+            color: rgb(51, 1, 71);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .celebrate {
+            animation: celebrate-animation 1s forwards;
+        }
+        @keyframes celebrate-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .health-label {
+            margin-top: 10px;
+    position: absolute;
+    font-size: 25px; /* Increased font size */
+    color: white;
+    margin-bottom: 10px; /* Added space below the label */
+    font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+.player-health {
+    background-color: green;
+    height: 10px; /* Keep the height consistent */
+    margin-top: 30px; /* Add space between the health label and the bar */
+}
+#resetButton{
+    margin-top: 40px;
+}
+#pauseButton{
+    margin-top: 40px;
+}
+.opponent-health {
+    
+    background-color: red;
+    height: 10px; /* Keep the height consistent */
+    margin-top: 30px; /* Add space between the health label and the bar */
+}
+#gameTitle {
+    position: absolute;
+    top: 20px; /* Adjust this value to move the title up or down */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white; /* Title color */
+    font-size: 46px; /* Title size */
+    color: #5c0554;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Shadow effect */
+    font-family: 'Arial', sans-serif; /* Font style */
+}
+    </style>
+</head>
+<body>
+    <h1 id="gameTitle">She Defends</h1>
+
+    
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <button id="sosButton"><i class="fas fa-siren"></i> SOS</button>
+    <button id="sprayButton">Spray</button>
+    <button id="pauseButton">Pause</button>
+    
+    <button id="resetButton">Reset</button>
+    
+    <div class="game-message" id="gameMessage"></div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const girlImg = new Image();
+        girlImg.src = 'https://img.icons8.com/color/48/000000/girl.png'; 
+        const attackerImg = new Image();
+        attackerImg.src = 'https://img.icons8.com/color/48/000000/boy.png'; 
+        const policeImg = new Image();
+        policeImg.src = 'https://img.icons8.com/color/48/000000/police-car.png'; 
+
+        const roadImg = new Image();
+        roadImg.src = 'https://img.icons8.com/color/48/000000/road.png'; 
+        const buildingImg1 = new Image();
+        buildingImg1.src = 'https://img.icons8.com/color/48/000000/building.png'; 
+        const buildingImg2 = new Image();
+        buildingImg2.src = 'https://img.icons8.com/color/48/000000/building.png'; 
+
+        const attackSound = new Audio('https://www.soundjay.com/button/sounds/button-16.mp3'); 
+        const sosSound = new Audio('https://www.soundjay.com/button/sounds/button-18.mp3'); 
+        const healthPickupSound = new Audio('https://www.soundjay.com/button/sounds/button-19.mp3');
+        const backgroundMusic = new Audio('https://www.soundjay.com/button/sounds/button-22.mp3'); 
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = 0.2;
+
+        let gamePaused = false;
+        const player = {
+            x: 50,
+            y: 250,
+            width: 100, // Increased size of the girl icon
+            height: 100,
+            health: 100,
+        };
+
+        const opponent = {
+            x: 700,
+            y: 250,
+            width: 100, // Increased size of the boy icon
+            height: 100,
+            health: 100,
+            speed: 1.5,
+            canMove: true 
+        };
+
+        const policeCar = {
+    x: 700,
+    y: 250,
+    width: 80, // Increase the size of the police car icon
+    height: 80,
+    visible: false,
+    speed: 2
+};
+
+        let policeArrived = false;
+        let girlInCar = false; 
+
+        const playerHealthBar = document.createElement('div');
+        playerHealthBar.classList.add('health-bar', 'player-health');
+        const opponentHealthBar = document.createElement('div');
+        opponentHealthBar.classList.add('health-bar', 'opponent-health');
+
+        document.body.appendChild(playerHealthBar);
+        document.body.appendChild(opponentHealthBar);
+
+        function updateHealthBars() {
+            playerHealthBar.style.width = player.health + 'px';
+            playerHealthBar.style.left = '20px';
+            playerHealthBar.style.top = '20px';
+
+            opponentHealthBar.style.width = opponent.health + 'px';
+            opponentHealthBar.style.right = '20px';
+            opponentHealthBar.style.top = '20px';
+        }
+
+        function createHealthLabels() {
+            const playerHealthLabel = document.createElement('div');
+            playerHealthLabel.classList.add('health-label');
+            playerHealthLabel.textContent = "Player's Health";
+            playerHealthLabel.style.left = '20px';
+            playerHealthLabel.style.top = '5px';
+            document.body.appendChild(playerHealthLabel);
+
+            const opponentHealthLabel = document.createElement('div');
+            opponentHealthLabel.classList.add('health-label');
+            opponentHealthLabel.textContent = "Attacker's Health";
+            opponentHealthLabel.style.right = '20px';
+            opponentHealthLabel.style.top = '5px';
+            document.body.appendChild(opponentHealthLabel);
+        }
+
+        function detectCollision(obj1, obj2) {
+            return (
+                obj1.x < obj2.x + obj2.width &&
+                obj1.x + obj1.width > obj2.x &&
+                obj1.y < obj2.y + obj2.height &&
+                obj1.y + obj1.height > obj2.y
+            );
+        }
+
+        function moveOpponentTowardPlayer() {
+            if (opponent.canMove && opponent.x > player.x && !policeArrived) {
+                opponent.x -= opponent.speed;
+            }
+        }
+
+        function handleCollision() {
+            if (detectCollision(player, opponent) && !policeArrived) {
+                player.health -= 1;
+                attackSound.play(); 
+                if (player.health <= 0) {
+                    player.health = 0;
+                    displayLoseMessage();
+                }
+            }
+        }
+
+        function movePoliceCarTowardPlayer() {
+            if (policeCar.visible && policeCar.x > player.x + player.width) {
+                policeCar.x -= policeCar.speed; 
+            } else {
+                displayWinMessage(); 
+            }
+        }
+
+        function displayWinMessage() {
+            const gameMessage = document.getElementById('gameMessage');
+            gameMessage.textContent = 'Congratulations! You won!';
+            gameMessage.classList.add('celebrate');
+            gameMessage.style.opacity = 1;
+            setTimeout(() => gameMessage.style.opacity = 0, 3000);
+        }
+
+        function displayLoseMessage() {
+            const gameMessage = document.getElementById('gameMessage');
+            gameMessage.textContent = 'You lost!';
+            gameMessage.style.opacity = 1;
+            setTimeout(() => gameMessage.style.opacity = 0, 3000);
+        }
+
+        function summonPolice() {
+            if (!policeArrived) {
+                policeCar.visible = true;
+                alert("Police are on their way!");
+                movePoliceCarTowardPlayer();
+            }
+        }
+
+        function movePoliceCar() {
+            policeCar.x = 700; 
+            const moveInterval = setInterval(() => {
+                if (policeCar.x > player.x + player.width) {
+                    policeCar.x -= policeCar.speed; 
+                } else {
+                    clearInterval(moveInterval);
+                    displayWinMessage(); 
+                }
+                draw();
+            }, 1000 / 60);
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(roadImg, 0, 0, canvas.width, canvas.height); 
+            ctx.drawImage(buildingImg1, 50, 150, 70, 100); 
+            ctx.drawImage(buildingImg2, 300, 150, 70, 100); 
+            ctx.drawImage(girlImg, player.x, player.y, player.width, player.height);
+            ctx.drawImage(attackerImg, opponent.x, opponent.y, opponent.width, opponent.height);
+
+            if (policeCar.visible) {
+                ctx.drawImage(policeImg, policeCar.x, policeCar.y, policeCar.width, policeCar.height);
+            }
+
+            updateHealthBars();
+            handleCollision(); 
+            moveOpponentTowardPlayer();
+            if (policeArrived) movePoliceCarTowardPlayer();
+        }
+
+        function gameLoop() {
+            if (!gamePaused) {
+                draw();
+            }
+            requestAnimationFrame(gameLoop);
+        }
+
+        document.getElementById('sosButton').addEventListener('click', () => {
+            summonPolice();
+            policeArrived = true; 
+        });
+
+        document.getElementById('sprayButton').addEventListener('click', () => {
+            if (opponent.health > 0) {
+                opponent.canMove = false; 
+                opponent.health -= 5; 
+                if (opponent.health <= 0) {
+                    opponent.health = 0;
+                    displayWinMessage(); 
+                }
+            }
+        });
+
+        document.getElementById('pauseButton').addEventListener('click', () => {
+            gamePaused = !gamePaused;
+            document.getElementById('pauseButton').textContent = gamePaused ? 'Resume' : 'Pause';
+        });
+
+        document.getElementById('resetButton').addEventListener('click', () => {
+            player.health = 100;
+            opponent.health = 100;
+            policeCar.visible = false;
+            policeArrived = false;
+            gamePaused = false;
+            opponent.canMove = true; 
+            document.getElementById('gameMessage').textContent = '';
+            updateHealthBars();
+        });
+
+        createHealthLabels();
+        gameLoop();
+    </script>
+</body>
+</html>

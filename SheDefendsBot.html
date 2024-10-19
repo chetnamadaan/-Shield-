@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stree Shield Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .chatbox {
+            width: 400px;
+            height: 500px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .chatbox-header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 20px;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .chatbox-body {
+            padding: 10px;
+            height: 400px;
+            overflow-y: scroll;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            width: fit-content;
+        }
+
+        .user-message {
+            background-color: #d1ecf1;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #d4edda;
+            align-self: flex-start;
+        }
+
+        .chatbox-footer {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .chatbox-footer input {
+            width: 85%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .chatbox-footer button {
+            width: 15%;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chatbox-footer button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chatbox">
+    <div class="chatbox-header">
+        Stree Shield Chatbot
+    </div>
+    <div class="chatbox-body" id="chatboxBody">
+        <!-- Chat messages will be appended here -->
+    </div>
+    <div class="chatbox-footer">
+        <input type="text" id="userInput" placeholder="Type your message here...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+<script>
+    const chatboxBody = document.getElementById("chatboxBody");
+    const accessToken = 'ya29.a0AcM612xL00mLIJOL50yjR-Cy1cuEYCwsAHBShyieUGe9PCzu4pU_eyIUC7Gtv5ukUkYdJ3FASkXqPxsIdwEDArO6hJtbkXcYqKpMV-tO4QMcno5OTs65AzD0QUizgJCHenH8UCkEWHOH4oC5e1ZLNRttICGj4HQ3Geh5lpkKaCgYKAaYSARESFQHGX2MiZtPPxQ0mYq3dFmw7eTI1IQ0175'; // Replace with your actual access token
+    const projectId = 'stree-shield-chatbot-fnxc'; // Replace with your Dialogflow project ID
+    const sessionId = 'user-session-1'; // Use a unique session ID for each user session
+
+    function appendMessage(message, sender) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("chat-message");
+        messageElement.classList.add(sender === "user" ? "user-message" : "bot-message");
+        messageElement.textContent = message;
+        chatboxBody.appendChild(messageElement);
+        chatboxBody.scrollTop = chatboxBody.scrollHeight;
+    }
+
+    async function getBotResponse(userMessage) {
+        const url = `https://dialogflow.googleapis.com/v2/projects/${projectId}/agent/sessions/${sessionId}:detectIntent`;
+
+        const requestBody = {
+            queryInput: {
+                text: {
+                    text: userMessage,
+                    languageCode: 'en-US',
+                },
+            },
+        };
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            console.error('Error:', response.statusText);
+            return "Here are a few safety tips: 1. Stay aware of your surroundings. 2. Keep emergency contacts updated. 3. Use the SOS feature if you feel unsafe";
+        }
+
+        const data = await response.json();
+        return data.queryResult.fulfillmentText || "Sorry, I didn't understand that.";
+    }
+
+    async function sendMessage() {
+        const userInput = document.getElementById("userInput");
+        const userMessage = userInput.value.trim();
+
+        if (userMessage === "") return;
+
+        // Display user message
+        appendMessage(userMessage, "user");
+
+        // Get bot response
+        const botResponse = await getBotResponse(userMessage);
+
+        // Display bot response
+        setTimeout(() => {
+            appendMessage(botResponse, "bot");
+        }, 500);
+
+        userInput.value = "";
+    }
+</script>
+</body>
+</html>

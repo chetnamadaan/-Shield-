@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Self-Defense Training Registration</title>
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .registration-form-container {
+            width: 100%;
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[type="submit"], button {
+            padding: 10px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #ff85c4;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .payment-section {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .payment-section h3 {
+            color: #333;
+        }
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="registration-form-container">
+        <h2>Register for Virtual Self-Defense Training</h2>
+        <form id="registrationForm">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="session">Select Training Session:</label>
+            <select id="session" name="session" required>
+                <option value="beginner">Beginner Session</option>
+                <option value="intermediate">Intermediate Session</option>
+                <option value="advanced">Advanced Session</option>
+            </select>
+
+            <input type="submit" value="Register Now">
+        </form>
+
+        
+        <div class="payment-section hidden" id="paymentSection">
+            <h3>Complete Your Payment</h3>
+            <p>To confirm your spot, please proceed with the payment.</p>
+            <button id="payNowButton">Pay Now</button>
+        </div>
+    </div>
+
+    <script>
+        
+        document.getElementById("registrationForm").onsubmit = function(event) {
+            event.preventDefault(); 
+            alert("Registration successful!");
+
+           
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const session = document.getElementById('session').value;
+
+            
+            console.log("Full Name:", fullName);
+            console.log("Email:", email);
+            console.log("Phone:", phone);
+            console.log("Session:", session);
+
+            
+            document.getElementById("paymentSection").classList.remove("hidden");
+        }
+
+        
+        document.getElementById("payNowButton").onclick = function() {
+            alert("Payment processing... Thank you for registering!");
+            
+        }
+    </script>
+
+</body>
+</html>

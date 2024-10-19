@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>स्त्री Shield - Join Our Community</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        input[type="submit"], button {
+            padding: 10px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover, button:hover {
+            background-color: #ff85c4;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Join Stree Shield Community</h2>
+        <form id="communityRegistrationForm">
+            <label for="fullName">Full Name:</label>
+            <input type="text" id="fullName" name="fullName" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" required>
+
+            <label for="session">Preferred Session:</label>
+            <select id="session" name="session" required>
+                <option value="employment">Employment Opportunities</option>
+                <option value="skills">Skill Development</option>
+                <option value="financial">Financial Planning</option>
+            </select>
+
+            <label for="jobProfile">Job Profile (Optional):</label>
+            <select id="jobProfile" name="jobProfile">
+                <option value="" disabled selected>Select a Job Profile</option>
+                <option value="safetyOfficer">Safety Officer</option>
+                <option value="counselor">Counselor</option>
+                <option value="communityOrganizer">Community Organizer</option>
+                <option value="selfDefenseTrainer">Self-defense Trainer</option>
+                <option value="legalAdvisor">Legal Advisor</option>
+                <option value="socialWorker">Social Worker</option>
+                <option value="prSpecialist">Public Relations Specialist</option>
+                <option value="digitalSafetyEducator">Digital Safety Educator</option>
+                <option value="helplineOperator">Helpline Operator</option>
+                <option value="mentalHealthAdvocate">Mental Health Advocate</option>
+                <option value="crisisInterventionSpecialist">Crisis Intervention Specialist</option>
+                <option value="womensRightsAdvocate">Women's Rights Advocate</option>
+                <option value="safetyAppDeveloper">Safety App Developer</option>
+                <option value="entrepreneurSafetyProducts">Entrepreneur (Safety Products)</option>
+                <option value="hrManager">HR Manager (Women's Safety)</option>
+            </select>
+
+            <input type="submit" value="Register Now">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("communityRegistrationForm").onsubmit = function(event) {
+            event.preventDefault(); 
+            alert("Registration successful!");
+        };
+    </script>
+
+</body>
+</html>

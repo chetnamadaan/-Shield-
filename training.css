@@ -1,0 +1,261 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --font-size-base: 16px;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    font-size: var(--font-size-base);
+    background-color: #f8f8f8;
+    color: #333; /* Changed to a darker color for better readability */
+    scroll-behavior: smooth;
+}
+
+/* Header */
+header {
+    background-color: rgb(183, 63, 196); /* Light grey color */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    margin-left: 30px;
+    margin-top: -12px;
+    width: 150px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-right: 30px;
+    margin-top: -20px;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 1.75rem; /* 28px */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #b2a9c4;
+    text-decoration: underline; /* Added hover effect */
+}
+
+/* Training Section */
+.training-section {
+    padding: 50px 40px;
+    background-color: #ffffff; /* Changed to white for contrast */
+    text-align: center;
+}
+
+.training-content {
+    display: flex;
+    justify-content: space-between; /* Adjust for spacing between items */
+    align-items: stretch; /* Make sure items stretch to equal height */
+    margin-bottom: 40px;
+}
+
+.training-item {
+    padding: 20px;
+    margin: 20px; /* Added margin for spacing */
+    background-color: #eaeaea; /* Light grey for the cards */
+    border-radius: 8px; /* Rounded corners for aesthetic appeal */
+    flex: 1; /* Ensure all items grow equally */
+}
+
+.training-item img {
+    width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+}
+
+/* Registration Section */
+.registration-section {
+    background: linear-gradient(135deg, #d1c4e9, #e8eaf6); /* Gradient background */
+    padding: 40px; /* More padding for better aesthetics */
+    border-radius: 10px; /* Rounded corners */
+    text-align: center;
+    margin: 20px auto;
+    align-items: center;
+    max-width: 800px; /* Set a max width for better alignment */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+}
+
+.registration-title {
+    font-size: 32px; /* Larger title font */
+    margin-bottom: 10px;
+    color: rgb(183, 63, 196); /* Color to match the theme */
+}
+
+.registration-section p {
+    font-size: 1.125rem;
+    margin-bottom: 20px;
+    color: #333; 
+}
+
+.registration-section ul {
+    list-style-type: none;
+}
+
+.register-button {
+    display: inline-block;
+    padding: 12px 25px; 
+    background-color: rgb(183, 63, 196); 
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px; 
+    transition: background-color 0.3s, transform 0.3s; 
+}
+
+.register-button:hover {
+    background-color: #b2a9c4; 
+    transform: translateY(-2px); 
+}
+
+
+.training-video-section {
+    padding: 50px 40px;
+    background-color: #f4f4f4;
+}
+
+.video-section-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.video-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap; 
+}
+
+.video-item {
+    background-color: #ffffff; 
+    border-radius: 8px;
+    margin: 10px;
+    flex: 1 1 30%; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.video-wrapper {
+    position: relative;
+    padding-top: 56.25%; 
+}
+
+.video-wrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+.video-description {
+    padding: 15px;
+    text-align: left;
+}
+
+.video-description h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+
+footer {
+    background-color: #1e1e1e; 
+    color: #ffffff; 
+    padding: 40px 20px; 
+    border-top: 5px solid rgb(183, 63, 196); 
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: rgb(183, 63, 196); 
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.footer-bottom a {
+    color: rgb(183, 63, 196); 
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
+.register-button:focus {
+    outline: 2px dashed #b2a9c4; 
+}
+
+
+@media (max-width: 768px) {
+    .video-content {
+        flex-direction: column; 
+    }
+
+    .video-item {
+        flex: 1 1 100%; 
+    }
+}

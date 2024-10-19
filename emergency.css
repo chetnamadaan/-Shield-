@@ -1,0 +1,235 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    color: #cfc7c7;
+    scroll-behavior: smooth;
+}
+
+
+header {
+    background-color: rgb(183, 63, 196); 
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img{
+    margin-left: 30px;
+    margin-top: -12px;
+    width: 150px;
+    
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-right: 30px;
+    margin-top: -20px;
+}
+
+.nav-links li {
+    margin-left: 20px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 28px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    color: #b2a9c4;
+}
+
+
+.how-to-steps li {
+    
+    background: #dfd7d7; 
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    color: #3c024d;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+
+.how-to-use-section {
+    padding: 40px;
+    background-color: #444; 
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); 
+    margin: 20px 0;
+}
+
+.how-to-use-container {
+    
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+.how-to-image {
+    max-width: 300px; 
+    border-radius: 10px; 
+}
+
+.how-to-use-container img {
+    width: 600px;
+    border-radius: 30px;
+    margin-top: 70px; 
+}
+
+.how-to-use-section h2 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 40px;
+    text-align: center; 
+    margin-bottom: 20px; 
+}
+
+.test-button {
+    background-color: rgb(183, 63, 196);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.test-button:hover {
+    background-color: #a850c4; 
+}
+
+.features-section {
+    padding: 40px;
+    text-align: center;
+    background-color: #444; 
+}
+
+.features-section h2 {
+    font-size: 2.5em;
+    color: rgb(183, 63, 196);
+}
+
+.feature-item {
+    display: inline-block;
+    width: 20%;
+    margin: 20px;
+    background: #555; 
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+
+
+.feature-item i {
+    font-size: 3em;
+    color: rgb(255, 215, 0); 
+}
+
+footer {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 40px 20px;
+    border-top: 5px solid rgb(183, 63, 196);
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+    margin: 10px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: rgb(183, 63, 196);
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 10px;
+}
+
+.footer-section a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer-bottom p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.footer-bottom a {
+    color: rgb(183, 63, 196);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-bottom a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .how-to-use-container {
+        flex-direction: column; 
+        align-items: center; 
+    }
+    
+    .how-to-image {
+        max-width: 100%; 
+        margin-top: 20px;
+    }
+
+    .feature-item {
+        width: 45%; 
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
