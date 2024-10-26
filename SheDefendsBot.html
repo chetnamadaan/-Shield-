@@ -126,7 +126,7 @@
                 },
             },
         };
-
+ 
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -135,16 +135,16 @@
             },
             body: JSON.stringify(requestBody),
         });
-
+ 
         if (!response.ok) {
             console.error('Error:', response.statusText);
             return "Here are a few safety tips: 1. Stay aware of your surroundings. 2. Keep emergency contacts updated. 3. Use the SOS feature if you feel unsafe";
         }
-
+ 
         const data = await response.json();
         return data.queryResult.fulfillmentText || "Sorry, I didn't understand that.";
     }
-
+ 
     async function sendMessage() {
         const userInput = document.getElementById("userInput");
         const userMessage = userInput.value.trim();
